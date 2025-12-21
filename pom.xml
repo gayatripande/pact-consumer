@@ -72,7 +72,7 @@
                 <artifactId>maven</artifactId>
                 <version>4.6.15</version> <configuration>
                 <pactBrokerUrl>https://research-d52824d7.pactflow.io</pactBrokerUrl>
-                <pactBrokerToken>NELzRRkv_T_AI7GiLe48_A</pactBrokerToken>
+                <pactBrokerToken>${env.PACT_BROKER_TOKEN}</pactBrokerToken>
 
                 <projectVersion>${project.version}</projectVersion>
 
