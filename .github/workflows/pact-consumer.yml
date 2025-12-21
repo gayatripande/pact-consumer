@@ -1,0 +1,33 @@
+name: Pact Consumer CI
+
+on: [push]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Run Tests and Publish Pact
+        run: mvn clean test pact:publish
+        env:
+          PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+          # This sets the tag in your pom.xml dynamically to the branch name
+          GIT_BRANCH: ${{ github.ref_name }}
+
+      - name: Can I Deploy?
+        run: docker run --rm \
+            -e PACT_BROKER_BASE_URL=https://research-d52824d7.pactflow.io \
+            -e PACT_BROKER_TOKEN=${{ secrets.PACT_BROKER_TOKEN }} \
+            pactfoundation/pact-cli:latest \
+            broker can-i-deploy \
+            --pacticipant pact-consumer \
+            --version 0.0.1-SNAPSHOT \
+            --to-environment production
