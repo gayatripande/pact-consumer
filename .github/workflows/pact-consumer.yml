@@ -24,10 +24,10 @@ jobs:
 
       - name: Can I Deploy?
         run: docker run --rm \
-            -e PACT_BROKER_BASE_URL=https://research-d52824d7.pactflow.io \
-            -e PACT_BROKER_TOKEN=${{ secrets.PACT_BROKER_TOKEN }} \
-            pactfoundation/pact-cli:latest \
-            broker can-i-deploy \
-            --pacticipant pact-consumer \
-            --version 0.0.1-SNAPSHOT \
-            --to-environment production
+         -e PACT_BROKER_BASE_URL=https://research-d52824d7.pactflow.io \
+         -e PACT_BROKER_TOKEN=${{ secrets.PACT_BROKER_TOKEN }} \
+         pactfoundation/pact-cli:latest \
+         broker can-i-deploy \
+         --pacticipant pact-consumer \
+         --version 0.0.1-SNAPSHOT \
+         --to-environment production
